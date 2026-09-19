@@ -11,11 +11,35 @@ class TicketController extends Controller
 {
     public function index() //La función se llama tal cual index por convencion de Laravel, para que sepa que es la función principal de la ruta
     {
-        $users = User::get();
-        $tickets = Ticket::all(); //Se obtiene todos los tickets de la base de datos y se guarda en la variable $tickets
+        //-------------------------86: Recuperación de modelos-------------------------
+        
+        //$tickets = Ticket::all(); //Se obtiene todos los tickets de la base de datos y se guarda en la variable $tickets
         //Adicional, este return view se localiza en la carpeta resources/views/tickets/index.blade.php, que es donde se encuentra la vista que se va a mostrar al usuario
-        //return $users;
-        return $tickets; 
+        //return $tickets; 
+
+        //$ticket = Ticket::find(2);
+        //return $ticket;
+
+        //$tickets = Ticket::where('prioridad', 'alta')->get();
+        //return $tickets;
+
+        //$tickets = Ticket::where('estado', 'abierto')->get();
+        //return $tickets;
+        //-------------------------86: Recuperación de modelos-------------------------
+
+        //-------------------------87: Insertar modelos-------------------------
+        //$ticket = new Ticket();
+
+        //$ticket->titulo = 'Problema con internet';
+        //$ticket->descripcion = 'El equipo no tiene conexión a internet';
+        //$ticket->estado = 'abierto';
+        //$ticket->prioridad = 'media';
+        //$ticket->user_id = 2;
+
+        //$ticket->save();
+
+        //return $ticket;
+        //-------------------------87: Insertar modelos-------------------------
     }
 
     public function create() //La función se llama tal cual create por convencion de Laravel, para que sepa que es la función principal de la ruta
@@ -34,6 +58,8 @@ class TicketController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
+        //88. Asignación masiva 
+        //Crear el ticket usando asignación masiva 
         $ticket = Ticket::create($request->all());
 
         return response()->json(['message' => 'Ticket creado exitosamente', 'ticket' => $ticket], 201);

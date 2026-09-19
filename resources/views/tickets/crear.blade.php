@@ -11,7 +11,8 @@
 
     <h1>Crear nuevo ticket</h1>
 
-    <form>
+    <form action="/tickets" method="POST">
+    @csrf
         <div>
             <label for="titulo">Título:</label>
             <input
@@ -47,6 +48,29 @@
 
         <br>
 
+        <br>
+
+<div>
+    <label for="estado">Estado:</label>
+
+    <select id="estado" name="estado">
+        <option value="abierto" selected>Abierto</option>
+        <option value="cerrado">Cerrado</option>
+    </select>
+</div>
+
+<br>
+
+<div>
+    <label for="user_id">Usuario:</label>
+
+    <select id="user_id" name="user_id">
+        <option value="1">Usuario Prueba</option>
+        <option value="2">Daniel</option>
+    </select>
+</div>
+
+<br>
         <button type="submit">Crear ticket</button>
 
     </form>

@@ -21,6 +21,7 @@ class UserController extends Controller{
         ]);
 
         // Crear usuario
+        //88. Asignación masiva
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -28,6 +29,7 @@ class UserController extends Controller{
         ]);
 
         // Redirigir o devolver respuesta
+        //87. Insertar modelos
         $user->save();
 
         return $user;
