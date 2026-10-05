@@ -7,63 +7,84 @@ use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\User;
 
-class TicketController extends Controller
-{
-    public function index() //La función se llama tal cual index por convencion de Laravel, para que sepa que es la función principal de la ruta
+class TicketController extends Controller{
+    
+    // Consultar todos los tickets
+    public function index()
     {
-        //-------------------------86: Recuperación de modelos-------------------------
-        
-        //$tickets = Ticket::all(); //Se obtiene todos los tickets de la base de datos y se guarda en la variable $tickets
-        //Adicional, este return view se localiza en la carpeta resources/views/tickets/index.blade.php, que es donde se encuentra la vista que se va a mostrar al usuario
-        //return $tickets; 
+        $tickets = Ticket::all();
 
-        //$ticket = Ticket::find(2);
-        //return $ticket;
-
-        //$tickets = Ticket::where('prioridad', 'alta')->get();
-        //return $tickets;
-
-        //$tickets = Ticket::where('estado', 'abierto')->get();
-        //return $tickets;
-        //-------------------------86: Recuperación de modelos-------------------------
-
-        //-------------------------87: Insertar modelos-------------------------
-        //$ticket = new Ticket();
-
-        //$ticket->titulo = 'Problema con internet';
-        //$ticket->descripcion = 'El equipo no tiene conexión a internet';
-        //$ticket->estado = 'abierto';
-        //$ticket->prioridad = 'media';
-        //$ticket->user_id = 2;
-
-        //$ticket->save();
-
-        //return $ticket;
-        //-------------------------87: Insertar modelos-------------------------
+        return view('tickets.index', compact('tickets'));
     }
 
-    public function create() //La función se llama tal cual create por convencion de Laravel, para que sepa que es la función principal de la ruta
+    // Mostrar formulario para crear un ticket
+    public function create()
     {
-        //Adicional, este return view se localiza en la carpeta resources/views/tickets/crear.blade.php, que es donde se encuentra la vista que se va a mostrar al usuario
-        return view('tickets.crear');
+        $usuarios = User::all();
+
+        return view('tickets.create', compact('usuarios'));
     }
 
+    // Validar y guardar un nuevo ticket
     public function store(Request $request)
     {
-        $request->validate([
+        $datosValidados = $request->validate([
             'titulo' => 'required|string|max:255',
             'descripcion' => 'required|string',
-            'estado' => 'required|string|in:abierto,cerrado',
-            'prioridad' => 'required|string|in:baja,media,alta',
+            'prioridad' => 'required|in:baja,media,alta',
             'user_id' => 'required|exists:users,id',
         ]);
 
-        //88. Asignación masiva 
-        //Crear el ticket usando asignación masiva 
-        $ticket = Ticket::create($request->all());
+        Ticket::create($datosValidados);
 
-        return response()->json(['message' => 'Ticket creado exitosamente', 'ticket' => $ticket], 201);
+        return redirect()->route('tickets.index');
     }
 
+    // Mostrar un ticket específico
+    public function show(Ticket $ticket)
+    {
+        return view('tickets.show', compact('ticket'));
+    }
 
+    // Mostrar formulario para editar un ticket
+    public function edit(Ticket $ticket)
+    {
+        $usuarios = User::all();
+
+        return view(
+            'tickets.edit',
+            compact('ticket', 'usuarios')
+        );
+    }
+
+    // Validar y actualizar un ticket
+    public function update(Request $request, Ticket $ticket)
+    {
+        $datosValidados = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'prioridad' => 'required|in:baja,media,alta',
+            'user_id' => 'required|exists:users,id',
+            'estado' => 'sometimes|in:abierto,cerrado',
+        ]);
+
+        $ticket->update($datosValidados);
+
+        return redirect()->route('tickets.index');
+    }
+
+    // Eliminar un ticket
+    public function destroy(Ticket $ticket)
+    {
+        $ticket->delete();
+
+        return redirect()->route('tickets.index');
+    }
 }
+
+
+//Vistas que solicita el controlador TicketController:
+// index.blade.php
+// create.blade.php
+// show.blade.php 
+// edit.blade.php   

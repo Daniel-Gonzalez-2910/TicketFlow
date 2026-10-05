@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tickets</title>
-</head>
-<body>
-    <div>
-    <!-- index.blade.php será la página donde mostraremos todos los tickets -->
-    <h1>Aquí aparecerán todos los tickets</h1>
-
-    <p>En esta página, los usuarios podrán ver una lista de todos los tickets existentes en el sistema. Cada ticket incluirá información relevante como el título, la descripción, el estado y la fecha de creación. Además, se proporcionarán opciones para filtrar y buscar tickets según diferentes criterios.</p>
-
-    <button>Crear Nuevo Ticket</button>
-
+<div>
+    <!-- Life is available only in the present moment. - Thich Nhat Hanh -->
+    <h1>Tickets</h1>
+    <a href="{{ route('tickets.create') }}">Crear Ticket</a>
+    <ul>
+        @foreach ($tickets as $ticket)
+            <li>
+                <a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->title }}</a>
+                <a href="{{ route('tickets.edit', $ticket->id) }}">Editar</a>
+                <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Eliminar</button>
+                </form>
+            </li>
+        @endforeach
+    </ul>
 </div>
-</body>
-</html>
