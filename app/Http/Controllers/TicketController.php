@@ -37,7 +37,9 @@ class TicketController extends Controller{
 
         Ticket::create($datosValidados);
 
-        return redirect()->route('tickets.index');
+        return redirect()
+            ->route('tickets.index')
+            ->with('success', 'Ticket creado correctamente.');
     }
 
     // Mostrar un ticket específico
@@ -70,7 +72,9 @@ class TicketController extends Controller{
 
         $ticket->update($datosValidados);
 
-        return redirect()->route('tickets.index');
+        return redirect()
+            ->route('tickets.index')
+            ->with('success', 'Ticket actualizado correctamente.');
     }
 
     // Eliminar un ticket
@@ -78,7 +82,9 @@ class TicketController extends Controller{
     {
         $ticket->delete();
 
-        return redirect()->route('tickets.index');
+        return redirect()
+            ->route('tickets.index')
+            ->with('success', 'Ticket eliminado correctamente.');
     }
 }
 

@@ -1,111 +1,81 @@
 @extends('layouts.app')
 
-@section('title', 'Tickets')
+@section('title', 'Usuarios')
 
 @section('content')
 
-<div>
+    <div>
 
-    {{-- Título de la página --}}
-    <h1>Usuarios</h1>
-
-
-    {{--
-        Enlace para ir al formulario de creación.
-
-        route('users.create'):
-        Busca la ruta que tiene el nombre "users.create".
-    --}}
-    <a href="{{ route('users.create') }}">
-        Crear Usuario
-    </a>
+        {{-- Título de la página --}}
+        <h1>Usuarios</h1>
+        <a href="{{ route('users.create') }}" class="btn btn-primary">
+            Crear Usuario
+        </a>
 
 
-    {{-- ================= LISTA DE USUARIOS ================= --}}
+        {{-- ================= LISTA DE USUARIOS ================= --}}
 
-    <ul>
+        <ul>
+            @forelse ($users as $user)
+                <li class="user-item">
 
-        {{--
-            $users viene desde UserController.
+                    <span>
+                        {{ $loop->iteration }}.
+                    </span>
 
-            Recorremos todos los usuarios obtenidos
-            de la base de datos.
+                    <div class="user-info">
 
-            En cada vuelta, $user representa
-            un usuario individual.
-        --}}
-        @forelse ($users as $user)
+                        <a href="{{ route('users.show', $user->id) }}">
+                            {{ $user->name }}
+                        </a>
 
-            <li>
+                        <span>
+                            {{ $user->email }}
+                        </span>
 
-                {{--
-                    Nombre del usuario.
+                    </div>
 
-                    Además funciona como enlace hacia
-                    la vista SHOW de ese usuario.
+                    <div class="user-actions">
 
-                    Ejemplo:
-                    /users/5
-                --}}
-                <a href="{{ route('users.show', $user->id) }}">
-                    {{ $user->name }}
-                </a>
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-secondary">
+                            Editar
+                        </a>
 
-                {{-- Mostrar correo --}}
-                - {{ $user->email }}
+                        <form action="{{ route('users.destroy', $user->id) }}" 
+                            method="POST"
+                            class="form-eliminar"
+                            data-id="{{ $user->id }}"
+                            data-tipo="usuario"
+                            >
+                            @csrf
+                            @method('DELETE')
 
+                            <button type="submit" class="btn btn-danger">
+                                Eliminar
+                            </button>
+                        </form>
 
-                {{--
-                    Enlace al formulario para editar
-                    este usuario específico.
+                    </div>
 
-                    Ejemplo:
-                    /users/5/edit
-                --}}
-                <a href="{{ route('users.edit', $user->id) }}">
-                    Editar
-                </a>
+                </li>
 
+            @empty
 
-                {{--
-                    Formulario para eliminar al usuario.
+                <li>
+                    No hay usuarios registrados.
+                </li>
+            @endforelse
+        </ul>
 
-                    HTML no permite DELETE directamente,
-                    así que enviamos POST y usamos
-                    @method('DELETE').
-                --}}
-                <form
-                    action="{{ route('users.destroy', $user->id) }}"
-                    method="POST"
-                >
-
-                    {{-- Token de seguridad de Laravel --}}
-                    @csrf
-
-                    {{-- Laravel interpreta la petición como DELETE --}}
-                    @method('DELETE')
-
-                    <button type="submit">
-                        Eliminar
-                    </button>
-
-                </form>
-
-            </li>
-
-        @empty
-
-            {{--
-                Esto se muestra si la colección
-                de usuarios está vacía.
-            --}}
-            <li>
-                No hay usuarios registrados.
-            </li>
-
-        @endforelse
-
-    </ul>
-
-</div>
+    </div>
 @endsection
+
+@push('scripts')
+
+    <script>
+        window.ticketflowRegistros = @json(
+            $users->pluck('name', 'id')
+        );
+    </script>
+
+@endpush

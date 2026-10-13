@@ -5,10 +5,7 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {{-- 
         Cada vista podrá definir su propio título.
@@ -23,43 +20,20 @@
         Carga los archivos principales de CSS y JavaScript
         mediante Vite.
     --}}
-    @vite([
-        'resources/css/app.css',
-        'resources/js/app.js'
-    ])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 
 <body>
 
     {{-- Encabezado general de toda la aplicación --}}
-<header>
+    <header>
 
-    <h1>TicketFlow</h1>
+        <h1>TicketFlow</h1>
 
-<nav>
+        @include('partials.navigation')
 
-    <a
-        href="{{ route('tickets.index') }}"
-        @class([
-            'active' => request()->routeIs('tickets.*')
-        ])
-    >
-        Tickets
-    </a>
-
-    <a
-        href="{{ route('users.index') }}"
-        @class([
-            'active' => request()->routeIs('users.*')
-        ])
-    >
-        Usuarios
-    </a>
-
-</nav>
-
-</header>
+    </header>
 
 
     {{-- 
@@ -71,6 +45,8 @@
         @yield('content')
 
     </main>
+
+    @stack('scripts')
 
 </body>
 

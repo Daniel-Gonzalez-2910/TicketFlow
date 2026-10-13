@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -6,8 +6,10 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
 }
 
 body {
@@ -144,4 +146,122 @@ select:focus {
 
 .btn-secondary:hover {
     background-color: #d5d5d5;
+}
+
+/* Acción peligrosa: eliminar */
+.btn-danger {
+    background-color: #b91c1c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #991b1b;
+}
+
+/* =========================
+   LISTA DE TICKETS
+   ========================= */
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+.ticket-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.ticket-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Evita que el formulario de eliminar agregue espacio extra */
+.ticket-actions form {
+    margin: 0;
+}
+
+/* =========================
+   LISTA DE USUARIOS
+   ========================= */
+
+.user-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.user-info {
+    display: flex;
+    gap: 10px;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-actions form {
+    margin: 0;
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    margin-bottom: 15px;
+}
+
+.estado-abierto,
+.estado-cerrado {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.estado-abierto {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.estado-cerrado {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.prioridad {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.prioridad-alta {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.prioridad-media {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.prioridad-baja {
+    background-color: #dbeafe;
+    color: #1e40af;
 }
