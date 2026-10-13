@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Tickets')
+
+@section('content')
+
 <div>
 
     {{-- Título de la página --}}

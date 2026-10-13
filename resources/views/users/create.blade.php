@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', 'Tickets')
+
+@section('content')
+
 <div>
     <!-- Well begun is half done. - Aristotle -->
     <h1>Crear Usuario</h1>
@@ -14,3 +20,4 @@
         <button type="submit">Crear Usuario</button>
     </form>
 </div>
+@endsection
